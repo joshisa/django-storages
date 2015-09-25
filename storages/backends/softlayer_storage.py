@@ -1,13 +1,24 @@
 #  Purpose:  Provide support for IBM Bluemix v1 Object Storage
 #  Code derived from https://github.com/Arpaso/django-softlayer.git
 
-import object_storage
-from cumulus.storage import CloudFilesStorage, CloudStorageDirectory
 import mimetypes
 import os, sys, logging
-from cloudfiles.errors import NoSuchObject
-from object_storage.errors import NotFound
-
+try:
+    from cumulus.storage import CloudFilesStorage, CloudStorageDirectory
+except ImportError:
+    raise ImproperlyConfigured("Could not load django-cumulus dependency.\n"
+                               "See https://github.com/django-cumulus/django-cumulus")
+try:
+    from cloudfiles.errors import NoSuchObject
+except ImportError:
+    raise ImproperlyConfigured("Could not load cloudfiles dependency.\n"
+                               "See https://github.com/ceph/python-cloudfiles")
+try:
+    import object_storage
+    from object_storage.errors import NotFound
+except ImportError:
+    raise ImproperlyConfigured("Could not load softlayer-object-storage dependency.\n"
+                               "See https://github.com/softlayer/softlayer-object-storage-python")
 
 class SoftLayerStorage(CloudFilesStorage):
 
