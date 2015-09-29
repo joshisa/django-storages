@@ -1,6 +1,6 @@
 from django.core.files.base import ContentFile
 from django.core.exceptions import ImproperlyConfigured
-from storages.compat import Storage
+from storages.compat import deconstructible, Storage
 
 import os
 import mimetypes
@@ -19,7 +19,7 @@ from storages.utils import setting
 def clean_name(name):
     return os.path.normpath(name).replace("\\", "/")
 
-
+@deconstructible
 class BluemixStorage(Storage):
     username = setting("BLUEMIX_OBJSTOR_USERNAME")
     api_key = setting("BLUEMIX_OBJSTOR_PASSWORD")
