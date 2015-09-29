@@ -65,7 +65,7 @@ class BluemixStorage(Storage):
         else:
             content_data = content.read()
 
-        self.connection[self.container_name][name].send(content_data.decode("utf-8"))
+        self.connection[self.container_name][name].send(content_data.decode("ISO-8859-1"))
         return name
 
     def url(self, name):
