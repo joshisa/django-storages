@@ -68,14 +68,14 @@ class BluemixStorage(Storage):
             print("Container not found.  Creating ...")
             self.connection[self.container_name].create()
             # Need to make the container public
-            self.connection[self.container_name].make_public()
+            publicresult = self.connection[self.container_name].make_public()
         else:
             # Need to ensure the container is public
-            self.connection[self.container_name].make_public()
+            publicresult = self.connection[self.container_name].make_public()
         if not self.connection[self.container_name][name].exists():
             self.connection[self.container_name][name].create()
         print("Saving content data ...")
-        self.connection[self.container_name][name].send(content_data.decode("ISO-8859-1"))
+        saveresult = self.connection[self.container_name][name].send(content_data.decode("ISO-8859-1"))
         return name
 
     def url(self, name):
