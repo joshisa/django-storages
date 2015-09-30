@@ -64,7 +64,10 @@ class BluemixStorage(Storage):
             content_data = b''.join(chunk for chunk in content.chunks())
         else:
             content_data = content.read()
-
+        print("DEBUG: Container Info")
+        print(self.container_name)
+        print(name)
+        print(content_data.decode("ISO-8859-1"))
         self.connection[self.container_name][name].send(content_data.decode("ISO-8859-1"), False)
         return name
 
