@@ -67,6 +67,11 @@ class BluemixStorage(Storage):
         if not self.connection[self.container_name].exists():
             print("Container not found.  Creating ...")
             self.connection[self.container_name].create()
+            # Need to make the container public
+            self.connection[self.container_name].enable_cdn()
+        else:
+            # Need to ensure the container is public
+            self.connection[self.container_name].enable_cdn()
         if not self.connection[self.container_name][name].exists():
             print("Object not found.  Creating ...")
             self.connection[self.container_name][name].create()
