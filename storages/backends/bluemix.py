@@ -78,4 +78,4 @@ class BluemixStorage(Storage):
         return name
 
     def url(self, name):
-        return "{}{}/{}".format(setting('MEDIA_URL'), self.container_name, name)
+        return "{}{}/{}".format(self.connection.properties['url'], self.container_name, name)
