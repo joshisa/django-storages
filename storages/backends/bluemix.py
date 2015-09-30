@@ -4,7 +4,6 @@ from storages.compat import deconstructible, Storage
 
 import os
 import mimetypes
-import locale
 
 try:
     import object_storage
@@ -76,7 +75,7 @@ class BluemixStorage(Storage):
         if not self.connection[self.container_name][name].exists():
             self.connection[self.container_name][name].create()
         print("Saving content data ...")
-        saveresult = self.connection[self.container_name][name].send(content_data.decode(locale.getpreferredencoding()), False)
+        saveresult = self.connection[self.container_name][name].send(content_data, False)
         return name
 
     def url(self, name):
