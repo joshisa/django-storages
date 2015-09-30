@@ -64,9 +64,6 @@ class BluemixStorage(Storage):
             content_data = b''.join(chunk for chunk in content.chunks())
         else:
             content_data = content.read()
-        print("DEBUG: Container Info")
-        print(self.container_name)
-        print(name)
         if not self.connection[self.container_name].exists():
             print("Container not found.  Creating ...")
             self.connection[self.container_name].create()
@@ -78,4 +75,4 @@ class BluemixStorage(Storage):
         return name
 
     def url(self, name):
-        return "{}{}/{}".format(self.connection.properties['url'], self.container_name, name)
+        return "{}/{}/{}".format(self.connection.properties['url'], self.container_name, name)
