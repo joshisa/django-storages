@@ -74,8 +74,8 @@ class BluemixStorage(Storage):
             publicresult = self.connection[self.container_name].make_public()
         if not self.connection[self.container_name][name].exists():
             self.connection[self.container_name][name].create()
-        print("Saving content data ...")
-        saveresult = self.connection[self.container_name][name].send(content_data, False)
+        print("Saving content data to Bluemix v1 Object Storage...")
+        saveresult = self.connection[self.container_name][name].write(content_data)
         return name
 
     def url(self, name):
