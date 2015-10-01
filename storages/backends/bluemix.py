@@ -81,8 +81,3 @@ class BluemixStorage(Storage):
 
     def url(self, name):
         return "{}/{}/{}".format(self.connection.properties['url'],self.container_name, name)
-        
-    def path(self, name):
-        if not self.connection[self.container_name][name].exists():
-            self.connection[self.container_name][name].create()
-        return "{}/{}/{}".format(self.connection.properties['url'],self.container_name, name)
