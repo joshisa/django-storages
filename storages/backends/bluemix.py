@@ -48,7 +48,8 @@ class BluemixStorage(Storage):
         self.connection[name].exists()
 
     def delete(self, name):
-        self.connection[self.container_name][name].delete()
+        if self.connection[self.container_name][name].exists():
+            self.connection[self.container_name][name].delete()
 
     def size(self, name):
         properties = self.connection[self.container_name][name].properties
