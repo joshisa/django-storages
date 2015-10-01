@@ -45,7 +45,7 @@ class BluemixStorage(Storage):
         return ContentFile(contents.encode('UTF-8'))
 
     def exists(self, name):
-        self.connection[name].exists()
+        self.connection[self.container_name][name].exists()
 
     def delete(self, name):
         if self.connection[self.container_name][name].exists():
