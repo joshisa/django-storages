@@ -80,7 +80,7 @@ class BluemixStorage(Storage):
         return name
 
     def url(self, name):
-        return "{}/{}".format(self.connection.properties['url'], name)
+        return "{}/{}/{}".format(self.connection.properties['url'],self.container_name, name)
         
     def path(self, name):
-        return "{}/{}".format(self.connection.properties['url'], name)
+        return "{}/{}".format(self.connection[self.container_name].properties['url'], name)
