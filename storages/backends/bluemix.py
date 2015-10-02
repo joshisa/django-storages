@@ -47,10 +47,10 @@ class BluemixStorage(Storage):
             print("Opening a URL Resource @ %s" % name)
             with urllib.request.urlopen(name) as response:
                 content_type = response.headers.get_content_charset() or mimetypes.guess_type(name)[0]
-                contents = response.read().decode(content_type)
+                contents = response.read()
         else:
-            contents = self.connection[self.container_name][name].read()
-        return ContentFile(contents.encode('utf-8'))
+            contents = self.connection[self.container_name][name].read().encode('utf-8')
+        return ContentFile(contents)
 
     def exists(self, name):
         return self.connection[self.container_name][name].exists()
