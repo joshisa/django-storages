@@ -44,11 +44,11 @@ class BluemixStorage(Storage):
     def _open(self, name, mode="rb"):
         if name.startswith('http'):
             print("Opening a URL Resource @ %s" % name)
-            with urllib.request.urlopen('http://python.org/') as response:
-                contents = response.read()
+            with urllib.request.urlopen(name) as response:
+                contents = response.read().decode(response.headers.get_content_charset())
         else:
             contents = self.connection[self.container_name][name].read()
-        return ContentFile(contents)
+        return ContentFile(contents.encode('utf-8'))
 
     def exists(self, name):
         return self.connection[self.container_name][name].exists()
