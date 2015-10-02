@@ -48,7 +48,7 @@ class BluemixStorage(Storage):
                 contents = response.read()
         else:
             contents = self.connection[self.container_name][name].read()
-        return ContentFile(contents.encode('UTF-8'))
+        return ContentFile(contents)
 
     def exists(self, name):
         return self.connection[self.container_name][name].exists()
