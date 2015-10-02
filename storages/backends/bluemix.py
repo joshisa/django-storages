@@ -49,7 +49,7 @@ class BluemixStorage(Storage):
                 content_type = response.headers.get_content_charset() or mimetypes.guess_type(name)[0]
                 contents = response.read()
         else:
-            contents = self.connection[self.container_name][name].read().encode('utf-8')
+            contents = self.connection[self.container_name][name].read()
         return ContentFile(contents)
 
     def exists(self, name):
