@@ -2,6 +2,7 @@ from django.core.files.base import ContentFile
 from django.core.exceptions import ImproperlyConfigured
 from storages.compat import deconstructible, Storage
 import urllib.request
+import mimetypes
 
 import os
 import mimetypes
@@ -45,7 +46,8 @@ class BluemixStorage(Storage):
         if name.startswith('http'):
             print("Opening a URL Resource @ %s" % name)
             with urllib.request.urlopen(name) as response:
-                contents = response.read().decode(response.headers.get_content_charset())
+                content_type = response.headers.get_content_charset() or mimetypes.guess_type(name)[0]
+                contents = response.read().decode(content_type)
         else:
             contents = self.connection[self.container_name][name].read()
         return ContentFile(contents.encode('utf-8'))
