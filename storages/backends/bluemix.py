@@ -1,6 +1,7 @@
 from django.core.files.base import ContentFile
 from django.core.exceptions import ImproperlyConfigured
 from storages.compat import deconstructible, Storage
+import urllib.request
 
 import os
 import mimetypes
@@ -41,7 +42,12 @@ class BluemixStorage(Storage):
         return self._connection
 
     def _open(self, name, mode="rb"):
-        contents = self.connection[self.container_name][name].read()
+        if name.startswith('http'):
+            print("Opening a URL Resource @ %s" % name)
+            with urllib.request.urlopen('http://python.org/') as response:
+                contents = response.read()
+        else:
+            contents = self.connection[self.container_name][name].read()
         return ContentFile(contents.encode('UTF-8'))
 
     def exists(self, name):
@@ -92,3 +98,6 @@ class BluemixStorage(Storage):
 
     def url(self, name):
         return "{}/{}/{}".format(self.connection.properties['url'],self.container_name, name)
+    
+    def path(self, name):
+        return name
