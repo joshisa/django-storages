@@ -56,6 +56,9 @@ class BluemixStorage(Storage):
     def exists(self, name):
         if name.startswith('http'):
             deconstruct = urlparse(name)
+            # https://dal05.objectstorage.softlayer.net/v1/AUTH_blah/foo/user/0/1/2/3/4/imagename.jpg
+            # array = ["https://dal05.objectstorage.softlayer.net", "v1", "AUTH_blah", "foo", "user/0/1/2/3/4/imagename.jpg"]
+            # array[4] == path.
             name = '/%s' % deconstruct.path.split('/', maxsplit=4)[4]
             print("EXISTS: Resolved partial name is %s" % name)
         return self.connection[self.container_name][name].exists()
