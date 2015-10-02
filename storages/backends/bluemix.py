@@ -78,6 +78,17 @@ class BluemixStorage(Storage):
         print("Saving content data to Bluemix v1 Object Storage...")
         saveresult = self.connection[self.container_name][name].write(content_data)
         return name
+        
+    def get_available_name(self, name):
+        """
+        Directly Returns a filename that's 
+        from what user input.
+        """
+        if self.exists(name):
+        # Remove the existing file
+            self.delete(name)
+        # Return the input name as output
+        return name
 
     def url(self, name):
         return "{}/{}/{}".format(self.connection.properties['url'],self.container_name, name)
