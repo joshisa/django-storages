@@ -49,7 +49,7 @@ class BluemixStorage(Storage):
                 content_type = response.headers.get_content_charset() or mimetypes.guess_type(name)[0]
                 contents = response.read()
         else:
-            contents = self.connection[self.container_name][name].read()
+            contents = self.connection[self.container_name][name].read().encode('utf-8')
         return ContentFile(contents)
 
     def exists(self, name):
@@ -102,4 +102,4 @@ class BluemixStorage(Storage):
         return "{}/{}/{}".format(self.connection.properties['url'],self.container_name, name)
     
     def path(self, name):
-        return name
+        return "{}/{}/{}".format(self.connection.properties['url'],self.container_name, name)
