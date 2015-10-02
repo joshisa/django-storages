@@ -77,7 +77,7 @@ class BluemixStorage(Storage):
             self.connection[self.container_name][name].create()
         print("Saving content data to Bluemix v1 Object Storage...")
         saveresult = self.connection[self.container_name][name].write(content_data)
-        return name
+        return self.url(name)
         
     def get_available_name(self, name):
         """
