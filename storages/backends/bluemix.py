@@ -1,6 +1,7 @@
 from django.core.files.base import ContentFile
 from django.core.exceptions import ImproperlyConfigured
 from storages.compat import deconstructible, Storage
+from urllib.parse import urlparse
 import urllib.request
 import mimetypes
 
@@ -56,6 +57,10 @@ class BluemixStorage(Storage):
         return self.connection[self.container_name][name].exists()
 
     def delete(self, name):
+        if name.startswith('http'):
+            deconstruct = urlparse(name)
+            name = '/%s' % deconstruct.path.split(',', maxsplit=1)[1]
+            print("Resolved partial name is %s" % name)
         if self.connection[self.container_name][name].exists():
             self.connection[self.container_name][name].delete()
 
