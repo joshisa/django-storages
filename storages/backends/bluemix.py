@@ -54,13 +54,17 @@ class BluemixStorage(Storage):
         return ContentFile(contents)
 
     def exists(self, name):
+        if name.startswith('http'):
+            deconstruct = urlparse(name)
+            name = '/%s' % deconstruct.path.split('/', maxsplit=1)[1]
+            print("EXISTS: Resolved partial name is %s" % name)
         return self.connection[self.container_name][name].exists()
 
     def delete(self, name):
         if name.startswith('http'):
             deconstruct = urlparse(name)
-            name = '/%s' % deconstruct.path.split(',', maxsplit=1)[1]
-            print("Resolved partial name is %s" % name)
+            name = '/%s' % deconstruct.path.split('/', maxsplit=1)[1]
+            print("DELETE: Resolved partial name is %s" % name)
         if self.connection[self.container_name][name].exists():
             self.connection[self.container_name][name].delete()
 
