@@ -104,9 +104,9 @@ class BluemixStorage(Storage):
         Directly Returns a filename that's 
         from what user input.
         """
-        if self.exists(name):
+        # if self.exists(name):
         # Remove the existing file
-            self.delete(name)
+        #    self.delete(name)
         # Return the input name as output
         return name
 
