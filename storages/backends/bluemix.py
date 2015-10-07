@@ -115,3 +115,13 @@ class BluemixStorage(Storage):
     
     def path(self, name):
         return "{}/{}/{}".format(self.connection.properties['url'],self.container_name, name)
+        
+    def filename(self, name):
+        if name.startswith('http'):
+            deconstruct = urlparse(name)
+            # https://dal05.objectstorage.softlayer.net/v1/AUTH_blah/foo/user/0/1/2/3/4/imagename.jpg
+            # array = ["https://dal05.objectstorage.softlayer.net", "v1", "AUTH_blah", "foo", "user/0/1/2/3/4/imagename.jpg"]
+            # array[4] == path.
+            name = '%s' % deconstruct.path.split('/', maxsplit=4)[4]
+            print("FILENAME: Resolved file name is %s" % name)
+        return name
